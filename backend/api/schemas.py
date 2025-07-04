@@ -8,6 +8,7 @@ class OutletBase(BaseModel):
     hours: Optional[str]
     latitude: Optional[float]
     longitude: Optional[float]
+    state: str
 
 class Outlet(OutletBase):
     id: int

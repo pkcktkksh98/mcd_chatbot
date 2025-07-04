@@ -18,6 +18,7 @@ def save_outlets(outlets):
             hours=outlet.get("hours"),
             latitude=outlet.get("latitude"),
             longitude=outlet.get("longitude"),
+            state=outlet["state"]
         )
         try:
             print(f"Inserted: {outlet['name']}")
