@@ -13,3 +13,4 @@ class McdOutlet(Base):
     hours = Column(String(255), nullable=True)
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
+    state = Column(String, nullable=False)

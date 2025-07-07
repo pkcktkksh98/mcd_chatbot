@@ -3,7 +3,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { useState } from "react";
 import { useMapEvent } from "react-leaflet";
-
+import RecenterMap from "./RecenterMap";
 
 // Fix default icon issue in Leaflet
 import iconUrl from "leaflet/dist/images/marker-icon.png";
@@ -44,11 +44,13 @@ type Outlet = {
 
 type Props = {
   outlets: Outlet[];
+  center: [number, number];
 };
 
-export default function OutletMap({ outlets }: Props) {
+export default function OutletMap({ outlets,center }: Props) {
   const [selectedOutlet, setSelectedOutlet] = useState<Outlet | null>(null);
   const [nearbyOutlets, setNearbyOutlets] = useState<number[]>([]);
+  // console.log(center);
 
   // Helper: Calculate distance in KM using Haversine
   const getDistanceInKm = (lat1: number, lon1: number, lat2: number, lon2: number) => {
@@ -89,7 +91,8 @@ export default function OutletMap({ outlets }: Props) {
 
 
   return (
-    <MapContainer center={[3.139, 101.6869]} zoom={12} style={{ height: "90vh", width: "75%"}}>
+    <MapContainer center={center} zoom={12} style={{ height: "90vh", width: "75%"}}>
+      <RecenterMap center={center} />
       <TileLayer
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
