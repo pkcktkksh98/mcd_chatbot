@@ -23,9 +23,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/outlets", response_model=List[Outlet])
-def get_outlets(state: str = Query(...), db: Session = Depends(get_db_session)):
+@app.get("/outlets")
+def get_outlets(state: str, db: Session = Depends(get_db_session)):
     return crud.get_outlets_by_state(db, state)
+    
 
 @app.get("/outlets/{outlet_id}", response_model=schemas.Outlet)
 def get_outlet(outlet_id: int, db: Session = Depends(get_db_session)):
