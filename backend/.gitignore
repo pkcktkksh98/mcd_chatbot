@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-
-=======
 
 # OS files
 .DS_Store
@@ -43,4 +40,3 @@ out/
 .env
 .env.local
 build/
->>>>>>> 3faa8a19ad9729b08df55040daa7516092b047bb
