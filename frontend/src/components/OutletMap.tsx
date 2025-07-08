@@ -38,8 +38,8 @@ type Outlet = {
   id: number;
   name: string;
   address: string;
-  latitude: number;
-  longitude: number;
+  lat: number;
+  lng: number;
 };
 
 type Props = {
@@ -75,7 +75,7 @@ export default function OutletMap({ outlets,center }: Props) {
       .filter((o) => o.id !== outlet.id)
       .filter(
         (o) =>
-          getDistanceInKm(outlet.latitude, outlet.longitude, o.latitude, o.longitude) <= 5
+          getDistanceInKm(outlet.lat, outlet.lng, o.lat, o.lng) <= 5
       )
       .map((o) => o.id);
 
@@ -91,7 +91,7 @@ export default function OutletMap({ outlets,center }: Props) {
 
 
   return (
-    <MapContainer center={center} zoom={12} style={{ height: "90vh", width: "75%"}}>
+    <MapContainer center={center} zoom={12} style={{ height: "80vh"}}>
       <RecenterMap center={center} />
       <TileLayer
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'
@@ -113,7 +113,7 @@ export default function OutletMap({ outlets,center }: Props) {
         return (
           <Marker
             key={outlet.id}
-            position={[outlet.latitude, outlet.longitude]}
+            position={[outlet.lat, outlet.lng]}
             icon={icon}
             eventHandlers={{ click: () => handleMarkerClick(outlet) }}
           >
@@ -128,7 +128,7 @@ export default function OutletMap({ outlets,center }: Props) {
 
       {selectedOutlet && (
         <Circle
-          center={[selectedOutlet.latitude, selectedOutlet.longitude]}
+          center={[selectedOutlet.lat, selectedOutlet.lng]}
           radius={5000}
           pathOptions={{ color: "blue", fillColor: "blue", fillOpacity: 0.2 }}
         />
