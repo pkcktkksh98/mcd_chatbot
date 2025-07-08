@@ -7,26 +7,27 @@ type MessageBubbleProps = {
 
 const MessageBubble: React.FC<MessageBubbleProps> = ({ sender, message }) => {
   const isUser = sender === "user";
+  const isTyping = message === "Typing...";
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: isUser ? "flex-end" : "flex-start",
-        marginBottom: "8px",
-      }}
-    >
+    <div className={`flex mb-2 ${isUser ? "justify-end" : "justify-start"}`}>
       <div
-        style={{
-          maxWidth: "70%",
-          padding: "10px 15px",
-          borderRadius: "20px",
-          backgroundColor: isUser ? "#4caf50" : "#e0e0e0",
-          color: isUser ? "white" : "black",
-          alignSelf: isUser ? "flex-end" : "flex-start",
-        }}
+        className={`max-w-[70%] px-4 py-2 rounded-2xl font-sans ${
+          isUser
+            ? "bg-green-500 text-white self-end"
+            : "bg-gray-200 text-black self-start"
+        }`}
       >
-        {message}
+        {isTyping ? (
+          <span className="inline-flex items-center space-x-1">
+            <span>Typing</span>
+            <span className="animate-bounce delay-[0ms]">.</span>
+            <span className="animate-bounce delay-[200ms]">.</span>
+            <span className="animate-bounce delay-[400ms]">.</span>
+          </span>
+        ) : (
+          message
+        )}
       </div>
     </div>
   );
