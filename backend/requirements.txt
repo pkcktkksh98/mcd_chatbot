@@ -26,3 +26,4 @@ bitsandbytes
 pymysql
 sqlalchemy
 geopy
+cryptography
