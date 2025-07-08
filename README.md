@@ -37,11 +37,25 @@ An interactive web application that allows users to locate McDonald's outlets ac
 ```
 mindhive_techassessment/
 ├── backend/
-│   ├── api/               # FastAPI routes, RAG logic, schemas
-│   ├── db/                # SQLAlchemy models and database logic
-│   ├── scraping/          # Scraper for McDonald's outlet data
-│   ├── utils/             # FAISS, embedding helper
-│   ├── main.py            # App entry point
+├── .env                         # Environment variables (e.g., DB connection, API keys)
+├── .gitignore                   # Ignore virtual envs, cache files, etc.
+├── requirements.txt             # Python dependencies
+├── api/                         # FastAPI app logic
+│   ├── crud.py                  # Database queries and business logic
+│   ├── main.py                  # Main FastAPI application with route definitions
+│   └──schemas.py               # Pydantic schemas for request/response validation
+├── db/                          # Database setup and models
+│   ├── database.py              # SQLAlchemy session and engine setup
+│   ├── models.py                # SQLAlchemy ORM models
+│   └──save_to_db.py            # Logic for saving scraped data into the DB
+├── scraping/                    # Web scraping logic
+│   └──  scrape_mcd.py            # Script to scrape McDonald's outlet data
+├── utils/                       # Utility scripts
+│   ├── build_vector_index.py    # Script to create FAISS vector index
+│   ├── geocode.py               # Geocoding utility for address-to-coordinates
+│   ├── state_extractor.py       # Extracts state names from scraped data
+│   ├── vector_index.faiss       # FAISS vector index file
+│   ├── vector_meta.npy          # Metadata for vector index (e.g., outlet info)          # FAISS, embedding helper
 │   └── requirements.txt
 ├── frontend/
 │   ├── public/
