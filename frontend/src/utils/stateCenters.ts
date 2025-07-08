@@ -6,7 +6,7 @@ const stateCenters: StateCenter = {
   "Kuala Lumpur": [3.139, 101.6869],
   "Selangor": [3.0738, 101.5183],
   "Johor": [1.4927, 103.7414],
-  "Penang": [5.4164, 100.3327],
+  "Pulau Pinang": [5.4164, 100.3327],
   "Sabah": [5.9788, 116.0753],
   "Sarawak": [1.5533, 110.3592],
   "Negeri Sembilan": [2.7258, 101.9424],
