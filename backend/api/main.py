@@ -89,7 +89,7 @@ def rag_query(query: Query, db: Session = Depends(get_db_session)):
     # 1. Retrieve top relevant outlets
     q_emb = embed_model.encode([query.q]).astype("float32") #type:ignore
 
-    D, I = index.search(q_emb, k=100)#type:ignore
+    D, I = index.search(q_emb, k=60)#type:ignore
     matched_ids = [int(ids[i]) for i in I[0]]#type:ignore
 
     outlets = db.query(McdOutlet).filter(McdOutlet.id.in_(matched_ids)).all()
@@ -118,13 +118,12 @@ def rag_query(query: Query, db: Session = Depends(get_db_session)):
         f"Do not make up answers. If the answer is not found in the data, reply: 'Sorry, I could not find that information in the outlet database.'\n\n"
         f"Context:\n{context}\n\n"
         f"Q: {query.q}\n"
-        f"A (respond in full sentence using natural language):"
+        f"A:"
         )
-    print(prompt)
     device = "cuda" if torch.cuda.is_available() else "cpu"
     inputs = tokenizer(prompt, return_tensors="pt").to(device)#type:ignore
-    output = gen_model.generate(**inputs, max_new_tokens=128,temperature=0.7,top_p=0.95)#type:ignore
+    output = gen_model.generate(**inputs, max_new_tokens=1000,pad_token_id=tokenizer.pad_token_id)#type:ignore
     decoded = tokenizer.decode(output[0], skip_special_tokens=True)#type:ignore
-    answer = decoded.split("A (respond in full sentence using natural language):")[-1].strip()
+    answer = decoded.split("A:")[-1].strip()
 
     return {"answer": answer}
