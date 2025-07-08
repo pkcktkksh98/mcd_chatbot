@@ -22,6 +22,7 @@ vendor/
 .idea/
 
 __pycache__/
+*.pyc
 *.py[cod]
 *.egg
 *.egg-info/
