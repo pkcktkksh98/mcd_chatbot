@@ -61,9 +61,13 @@ mindhive_techassessment/
 │   ├── public/
 │   ├── src/
 │   │   ├── components/
-│   │   │   ├── ChatBox.tsx
-│   │   │   ├── OutletMap.tsx
-│   │   │   └── MessageBubble.tsx
+│   │   │   ├── map/
+│   │   │   │   ├── OutletMap.tsx
+│   │   │   │   └── RecenterMap.tsx   
+│   │   │   ├──chat/
+│   │   │   │  ├── ChatBox.tsx
+│   │   │   │  └── MessageBubble.tsx
+│   │   │   
 │   │   ├── utils/
 │   │   │   └── stateCenters.ts
 │   │   ├── App.tsx
