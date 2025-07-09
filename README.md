@@ -151,13 +151,7 @@ mindhive_techassessment/
    npm install -D tailwindcss postcss autoprefixer
    npx tailwindcss init -p
    ```
-
-3. **Configure Tailwind in `tailwind.config.js`**  
-   ```js
-   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"]
-   ```
-
-4. **Start frontend dev server**  
+3. **Start frontend dev server**  
    ```bash
    npm run dev
    ```
@@ -172,9 +166,9 @@ mindhive_techassessment/
 4. Retrieved context is passed to local **Mistral-7B-Instruct** model
 5. A summarized, grounded answer is returned
 
-> Make sure your Mistral model is accessible locally from:
+> Make sure your TinyLlama model is accessible locally from:
 > ```
-> C:\Users\petro\.cache\huggingface\hub\models--mistralai--Mistral-7B-Instruct-v0.1
+> C:\Users\petro\.cache\huggingface\hub\models--mistralai--tinyllama-1.1B-Chat-v0.1
 > ```
 
 ---
