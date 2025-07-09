@@ -102,7 +102,7 @@ mindhive_techassessment/
 
 4. **Scrape and load outlet data** (optional if DB already populated)  
    ```bash
-   python scraping/scraper.py
+   python scraping/scrape_mcd.py.py
    ```
 
 5. **Start FastAPI server**  
