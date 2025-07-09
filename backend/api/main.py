@@ -70,12 +70,13 @@ model_ready = False
 try:
     index = faiss.read_index(VEC_PATH)
     ids = np.load(META_PATH)
-    embed_model = SentenceTransformer("all-MiniLM-L6-v2",device="cuda")
+    embed_model = SentenceTransformer("all-MiniLM-L6-v2")
+    llm_model = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
 
     gen_model = AutoModelForCausalLM.from_pretrained(
-        "mistralai/Mistral-7B-Instruct-v0.1",quantization_config=bnb_config, device_map="auto"
+        llm_model,quantization_config=bnb_config, device_map="auto"
     )
-    tokenizer = AutoTokenizer.from_pretrained("mistralai/Mistral-7B-Instruct-v0.1")
+    tokenizer = AutoTokenizer.from_pretrained(llm_model)
     model_ready = True
     print("MODEL LOADED!")
 except Exception as e:
