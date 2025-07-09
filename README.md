@@ -106,7 +106,7 @@ mindhive_techassessment/
    - Then run the following from your project root to scrape and insert outlet data:
    ```bash
    cd backend
-   python -m scraping/scrape_mcd
+   python -m scraping.scrape_mcd
    ```
 
    This will:
