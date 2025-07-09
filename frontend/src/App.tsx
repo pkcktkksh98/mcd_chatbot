@@ -10,8 +10,8 @@ type Outlet = {
   id: number;
   name: string;
   address: string;
-  latitude: number;
-  longitude: number;
+  lat: number;
+  lng: number;
   state: string;
 };
 

@@ -18,9 +18,9 @@ export default function ChatBox() {
 
     try {
       const res = await axios.post("http://localhost:8000/rag", { q: input });
-      setMessages([...newMessages, { role: "assistant", content: res.data.answer }]);
+      setMessages([...newMessages, { role: "bot", content: res.data.answer }]);
     } catch (err) {
-      setMessages([...newMessages, { role: "assistant", content: "Error getting response." }]);
+      setMessages([...newMessages, { role: "bot", content: "Error getting response." }]);
     } finally {
       setIsLoading(false);
     }
@@ -53,9 +53,13 @@ export default function ChatBox() {
       {/* Chat messages */}
       <div className="flex-grow overflow-y-auto mb-4">
         {messages.map((msg, idx) => (
-          <MessageBubble key={idx} sender={msg.role} message={msg.content} />
+          <MessageBubble
+            key={idx}
+            sender={msg.role === "assistant" ? "bot" : "user"}
+            message={msg.content}
+          />
         ))}
-        {isLoading && <MessageBubble sender="assistant" message="Typing..." />}
+        {isLoading && <MessageBubble sender="bot" message="Typing..." />}
         <div ref={bottomRef} />
       </div>
 
