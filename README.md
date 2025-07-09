@@ -111,6 +111,9 @@ mindhive_techassessment/
 
    This will:
    - Scrape all outlet information from McDonald's Malaysia website.
+     ```bash
+     https://www.mcdonalds.com.my/storefinder/index.php
+     ```
    - Geocode the outlet addresses.
    - Store them into the MySQL database automatically using SQLAlchemy ORM.
 
