@@ -3,7 +3,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { useState } from "react";
 import { useMapEvent } from "react-leaflet";
-import RecenterMap from "./RecenterMap";
+import RecenterMap from "../map/RecenterMap";
 
 // Fix default icon issue in Leaflet
 import iconUrl from "leaflet/dist/images/marker-icon.png";

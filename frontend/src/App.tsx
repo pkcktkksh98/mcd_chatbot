@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import OutletMap from "./components/OutletMap";
+import OutletMap from "./components/map/OutletMap";
 import axios from "axios";
 import stateCenters from "./utils/stateCenters";
-import ChatBox from "./components/ChatBox";
+import ChatBox from "./components/chat/ChatBox";
 // import DarkModeToggle from "./components/DarkModeToggle";
 
 
