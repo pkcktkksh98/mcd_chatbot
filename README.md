@@ -27,7 +27,7 @@ An interactive web application that allows users to locate McDonald's outlets ac
 - **Database**: MySQL (via SQLAlchemy ORM) – stores all outlet data
 - **RAG (Retrieval-Augmented Generation)**:
   - **Vector Store**: FAISS – for efficient semantic search
-  - **Embedding Model**: Local [Mistral-7B-Instruct](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.1)
+  - **Embedding Model**: Local [TinyLlama-1.1B-Chat](https://huggingface.co/TinyLlama/TinyLlama-1.1B-Chat-v1.0)
   - **Answering**: Local LLM inference with semantic context from outlet data
 
 ---
