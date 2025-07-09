@@ -80,6 +80,41 @@ mindhive_techassessment/
 ---
 
 ## ⚙️ Setup Instructions
+### 🛠️ Prepare the Database
+
+1. **Install and start MySQL**  
+   Make sure MySQL server is installed and running on your machine.
+
+2. **Create a new database**  
+   You can use the MySQL CLI or a GUI like phpMyAdmin to create a database named, for example:
+   ```sql
+   CREATE DATABASE mcd_outlets;
+   ```
+
+3. **Set up the `.env` file**  
+   In the root of your backend project (same level as `requirements.txt`), create a `.env` file and add your database credentials:
+   ```env
+   DB_USER=your_mysql_username
+   DB_PASSWORD=your_mysql_password
+   DB_HOST=localhost
+   DB_PORT=3306
+   DB_NAME=mcd_outlets
+   ```
+
+4. **Create tables and insert outlet data**  
+   - First, ensure your MySQL server allows connections with the credentials above.
+   - Then run the following from your project root to scrape and insert outlet data:
+   ```bash
+   cd backend
+   python -m scraping/scrape_mcd
+   ```
+
+   This will:
+   - Scrape all outlet information from McDonald's Malaysia website.
+   - Geocode the outlet addresses.
+   - Store them into the MySQL database automatically using SQLAlchemy ORM.
+
+✅ Now you're ready to run the backend API.
 
 ### 🔧 Backend
 
@@ -94,18 +129,7 @@ mindhive_techassessment/
    cd backend
    pip install -r requirements.txt
    ```
-
-3. **Prepare the database**
-   - Ensure MySQL is running
-   - Create a DB named (e.g., `mcd_outlets`)
-   - Configure `.env` file with DB credentials
-
-4. **Scrape and load outlet data** (optional if DB already populated)  
-   ```bash
-   python scraping/scrape_mcd.py.py
-   ```
-
-5. **Start FastAPI server**  
+3. **Start FastAPI server**  
    ```bash
    uvicorn api.main:app --reload
    ```
