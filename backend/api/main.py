@@ -7,6 +7,7 @@ from pydantic import BaseModel
 
 from db.database import get_db_session
 from api import crud, schemas
+from db.models import McdOutlet
 
 # from db.database import SessionLocal
 from fastapi import FastAPI, Depends
@@ -21,7 +22,6 @@ from sentence_transformers import SentenceTransformer
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from transformers.utils.quantization_config import BitsAndBytesConfig
 import torch
-from db.models import McdOutlet
 import os
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -40,7 +40,6 @@ app.add_middleware(
 )
 
 # ---------- Existing Endpoints ----------
-
 @app.get("/outlets")
 def get_outlets(state: Optional[str] = None, db: Session = Depends(get_db_session)):
     if state:
@@ -67,6 +66,7 @@ class Query(BaseModel):
 
 # Load RAG assets once at startup
 bnb_config = BitsAndBytesConfig(load_in_4bit=True)
+model_ready = False
 try:
     index = faiss.read_index(VEC_PATH)
     ids = np.load(META_PATH)
@@ -76,6 +76,7 @@ try:
         "mistralai/Mistral-7B-Instruct-v0.1",quantization_config=bnb_config, device_map="auto"
     )
     tokenizer = AutoTokenizer.from_pretrained("mistralai/Mistral-7B-Instruct-v0.1")
+    model_ready = True
     print("MODEL LOADED!")
 except Exception as e:
     print("Error loading RAG components:", e)
@@ -89,8 +90,9 @@ def rag_query(query: Query, db: Session = Depends(get_db_session)):
     # 1. Retrieve top relevant outlets
     q_emb = embed_model.encode([query.q]).astype("float32") #type:ignore
 
-    D, I = index.search(q_emb, k=60)#type:ignore
-    matched_ids = [int(ids[i]) for i in I[0]]#type:ignore
+    D, I = index.search(q_emb, k=10)#type:ignore
+    matched_ids = list(dict.fromkeys(int(ids[i]) for i in I[0])) #type:ignore
+    print(matched_ids)
 
     outlets = db.query(McdOutlet).filter(McdOutlet.id.in_(matched_ids)).all()
 
@@ -115,6 +117,7 @@ def rag_query(query: Query, db: Session = Depends(get_db_session)):
     # 3. Generate response using local model
     prompt = (
         f"You are a helpful assistant that answers questions based on provided outlet data.\n\n"
+        f"Avoid repeating the same outlet multiple times. Do not make up any outlets.\n"
         f"Do not make up answers. If the answer is not found in the data, reply: 'Sorry, I could not find that information in the outlet database.'\n\n"
         f"Context:\n{context}\n\n"
         f"Q: {query.q}\n"
@@ -122,8 +125,12 @@ def rag_query(query: Query, db: Session = Depends(get_db_session)):
         )
     device = "cuda" if torch.cuda.is_available() else "cpu"
     inputs = tokenizer(prompt, return_tensors="pt").to(device)#type:ignore
-    output = gen_model.generate(**inputs, max_new_tokens=1000,pad_token_id=tokenizer.pad_token_id)#type:ignore
+    output = gen_model.generate(**inputs, max_new_tokens=300,pad_token_id=tokenizer.pad_token_id, repetition_penalty=1.2)#type:ignore
     decoded = tokenizer.decode(output[0], skip_special_tokens=True)#type:ignore
     answer = decoded.split("A:")[-1].strip()
 
     return {"answer": answer}
+
+@app.get("/health")
+def health_check():
+    return {"status": "ready" if model_ready else "loading"}
