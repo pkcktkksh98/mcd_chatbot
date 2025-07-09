@@ -116,6 +116,8 @@ mindhive_techassessment/
 
 ✅ Now you're ready to run the backend API.
 
+---
+
 ### 🔧 Backend
 
 1. **Create Python virtual environment**  
