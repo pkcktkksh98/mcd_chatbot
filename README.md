@@ -88,7 +88,7 @@ mindhive_techassessment/
 2. **Create a new database**  
    You can use the MySQL CLI or a GUI like phpMyAdmin to create a database named, for example:
    ```sql
-   CREATE DATABASE mcd_outlets;
+   CREATE DATABASE mcd;
    ```
 
 3. **Set up the `.env` file**  
