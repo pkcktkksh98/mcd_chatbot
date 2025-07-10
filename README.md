@@ -80,6 +80,34 @@ mindhive_techassessment/
 ---
 
 ## ⚙️ Setup Instructions
+
+## 📦 Clone the Repository
+
+```bash
+git clone https://github.com/your-username/mindhive.git
+cd mindhive
+```
+
+---
+
+## 🐍 Create Python Virtual Environment
+
+Make sure you have Python 3.10+ and `virtualenv` or `conda`.
+
+### Using `venv`:
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
+
+### Or using `conda`:
+```bash
+conda create -n mindhive python=3.11 -y
+conda activate mindhive
+```
+
+---
+
 ### 🛠️ Prepare the Database
 
 1. **Install and start MySQL**  
@@ -98,7 +126,7 @@ mindhive_techassessment/
    DB_PASS=your_mysql_password
    DB_HOST=localhost
    DB_PORT=3306
-   DB_NAME=mcd_outlets
+   DB_NAME=mcd
    ```
 
 
@@ -139,13 +167,7 @@ mv faiss.index utils/
 
 ### 🔧 Backend
 
-1. **Create Python virtual environment**  
-   ```bash
-   conda create -n mindhive python=3.11
-   conda activate mindhive
-   ```
-
-2. **Install dependencies**  
+1.  **Install dependencies**  
    ```bash
    cd backend
    pip install -r requirements.txt
@@ -198,12 +220,12 @@ mv faiss.index utils/
 1. User inputs a query (e.g. "Show outlets with McCafe in KL")
 2. Query is semantically embedded
 3. FAISS retrieves top relevant outlet documents
-4. Retrieved context is passed to local **Mistral-7B-Instruct** model
+4. Retrieved context is passed to local **TinyLlama-1.1B-Chat** model
 5. A summarized, grounded answer is returned
 
 > Make sure your TinyLlama model is accessible locally from:
 > ```
-> C:\Users\petro\.cache\huggingface\hub\models--mistralai--tinyllama-1.1B-Chat-v0.1
+> C:\Users\petro\.cache\huggingface\hub\models--TinyLlama--TinyLlama-1.1B-Chat-v0.1
 > ```
 
 ---
