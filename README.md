@@ -95,7 +95,7 @@ mindhive_techassessment/
    In the root of your backend project (same level as `requirements.txt`), create a `.env` file and add your database credentials:
    ```env
    DB_USER=your_mysql_username
-   DB_PASSWORD=your_mysql_password
+   DB_PASS=your_mysql_password
    DB_HOST=localhost
    DB_PORT=3306
    DB_NAME=mcd_outlets
@@ -131,7 +131,7 @@ mindhive_techassessment/
    This will:
    - Scrape all outlet information from McDonald's Malaysia website.
      ```bash
-     https://www.mcdonalds.com.my/storefinder/index.php
+     https://www.mcdonalds.com.my/locate-us
      ```
    - Geocode the outlet addresses.
    - Store them into the MySQL database automatically using SQLAlchemy ORM.
