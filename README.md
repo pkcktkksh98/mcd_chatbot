@@ -107,6 +107,29 @@ mindhive_techassessment/
 
 ---
 
+## 🏗️ How to Build the Vector Index
+
+1. **Prepare Metadata**: Ensure your outlets are already stored in the database. You'll need to extract relevant text like:
+   - name
+   - address
+   - features
+   - state
+   - hours
+
+2. **Run the script**
+
+```bash
+python backend/rag/build_index.py
+```
+
+3. **What it does**:
+   - Fetches all outlet data from your database.
+   - Concatenates fields into text chunks per outlet.
+   - Encodes each chunk using SentenceTransformer embeddings.
+   - Stores the vector index using FAISS and saves metadata for retrieval.
+
+---
+
 ### 🔧 Backend
 
 1. **Create Python virtual environment**  
