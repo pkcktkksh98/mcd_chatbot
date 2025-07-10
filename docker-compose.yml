@@ -1,4 +1,14 @@
 services:
+  db:
+    image: mysql:8.0
+    container_name: mcd-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: mcd
+      MYSQL_ROOT_PASSWORD: 2200
+    volumes:
+      - mcd-db-data:/var/lib/mysql
+
   backend:
     build: ./backend
     container_name: backend
@@ -7,7 +17,14 @@ services:
     volumes:
       - ./backend:/app
     env_file:
-      - .env
+      - ./backend/.env
+    depends_on:
+      - db
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
 
   frontend:
     build: ./frontend
@@ -16,3 +33,6 @@ services:
       - "3000:80"
     depends_on:
       - backend
+
+volumes:
+  mcd-db-data:

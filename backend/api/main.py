@@ -13,7 +13,7 @@ from db.models import McdOutlet
 from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
 from api.schemas import Outlet
-
+from contextlib import asynccontextmanager
 
 # New imports for RAG
 import faiss
@@ -24,11 +24,23 @@ from transformers.utils.quantization_config import BitsAndBytesConfig
 import torch
 import os
 
+# backend/db/init_db.py
+from db.database import Base, engine
+from db.models import McdOutlet  # make sure the model is imported
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 VEC_PATH = os.path.join(BASE_DIR, "..", "utils", "vector_index.faiss")
 META_PATH = os.path.join(BASE_DIR, "..", "utils", "vector_meta.npy")
 
-app = FastAPI()
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    Base.metadata.create_all(bind=engine)
+    print("✅ Tables created (if not exist)")
+    yield
+
+app = FastAPI(lifespan=lifespan)
 
 # CORS for frontend
 app.add_middleware(
@@ -65,7 +77,6 @@ class Query(BaseModel):
     q: str
 
 # Load RAG assets once at startup
-bnb_config = BitsAndBytesConfig(load_in_4bit=True)
 model_ready = False
 try:
     index = faiss.read_index(VEC_PATH)
@@ -73,9 +84,20 @@ try:
     embed_model = SentenceTransformer("all-MiniLM-L6-v2")
     llm_model = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
 
-    gen_model = AutoModelForCausalLM.from_pretrained(
-        llm_model,quantization_config=bnb_config, device_map="auto"
-    )
+    if torch.cuda.is_available():
+        bnb_config = BitsAndBytesConfig(
+            load_in_4bit=True,
+            bnb_4bit_quant_type="nf4",
+            bnb_4bit_use_double_quant=True
+        )
+        gen_model = AutoModelForCausalLM.from_pretrained(
+            llm_model, quantization_config=bnb_config, device_map="auto"
+        )
+    else:
+        # fallback: full precision
+        gen_model = AutoModelForCausalLM.from_pretrained(
+            llm_model
+        )
     tokenizer = AutoTokenizer.from_pretrained(llm_model)
     model_ready = True
     print("MODEL LOADED!")

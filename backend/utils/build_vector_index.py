@@ -21,9 +21,7 @@ def build_index():
             f"State: {o.state}\n"
             f"Address: {o.address}\n"
             f"Telephone: {o.telephone or 'N/A'}\n"
-            f"Email: {o.email or 'N/A'}\n"
             f"Features: {o.features or 'N/A'}\n"
-            f"Google Maps: {o.google_maps or 'N/A'}\n"
             f"Waze: {o.waze_link or 'N/A'}"
         )
         texts.append(text)
