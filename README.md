@@ -155,7 +155,7 @@ mv faiss.index utils/
    - Then run the following from your project root to scrape and insert outlet data:
    ```bash
    cd backend
-   python -m scraping.scrape_mcd
+   python -m scraping.scrape_all_states_and_store
    ```
 
    This will:
