@@ -179,7 +179,8 @@ If you already have a .sql file of the McDonald's outlet data, you can manually 
 2. **Run the script**
 
 ```bash
-python backend/utils/build_index.py
+cd backend
+python -m utils.build_index
 ```
 
 3. **Move Vector Index into utils**
