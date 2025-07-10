@@ -128,9 +128,31 @@ conda activate mindhive
    DB_PORT=3306
    DB_NAME=mcd
    ```
+### 🧾Manual SQL Dump Import
+If you already have a .sql file of the McDonald's outlet data, you can manually import it into the running MySQL container:
 
-
-
+✅ Step-by-Step
+1. **Start the MySQL container (if not running):**
+   ```
+   docker compose up -d mcd-db
+   ```
+2. **Copy your SQL file into the container:**
+  ```
+  docker cp ./mcd_dump.sql mcd-db:/mcd_dump.sql
+  ```
+3. **Access the MySQL container:**
+  ```
+  docker exec -it mcd-db bash
+  ```
+4. **Run the import inside the container:**
+  ```
+  mysql -u root -p mcd < /mcd_dump.sql
+  ```
+5. **(Optional) Clean up the SQL file inside the container:**
+  ```
+  rm /mcd_dump.sql
+  exit
+  ```
 ✅ Now you're ready to run the backend API.
 
 ---
