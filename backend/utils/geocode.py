@@ -11,7 +11,7 @@ def geocode_and_get_hours(place_name: str):
         "q": place_name,
         "at": "3.1390,101.6869",  # center of Kota Bharu, not KL
         "limit": 1,
-        "apiKey": HERE_API_KEY
+        "apiKey": "i33RsjNa7OFXNpyhgj-QhYEE8U4MIN8Vn41NSKNS-xk"
     }
 
     try:
