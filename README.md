@@ -108,6 +108,16 @@ conda activate mindhive
 
 ---
 
+## 🐳 Dockerized Setup
+
+### 🔥 Quickstart with Docker
+This spins up the full stack (FastAPI, MySQL, and frontend), and initializes the database schema.
+```bash
+docker compose up -d
+docker compose exec backend python -m db.init_db
+```
+  
+---
 ### 🛠️ Prepare the Database
 
 1. **Install and start MySQL**  
