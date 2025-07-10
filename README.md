@@ -138,7 +138,7 @@ If you already have a .sql file of the McDonald's outlet data, you can manually 
    ```
 2. **Copy your SQL file into the container:**
     ```
-    docker cp ./mcd_dump.sql mcd-db:/mcd_dump.sql
+    docker cp backend/db/mcd_data.sql mcd-db:/mcd_data.sql
     ```
 3. **Access the MySQL container:**
     ```
@@ -146,11 +146,11 @@ If you already have a .sql file of the McDonald's outlet data, you can manually 
     ```
 4. **Run the import inside the container:**
     ```
-    mysql -u root -p mcd < /mcd_dump.sql
+    mysql -u root -p mcd < /mcd_data.sql
     ```
 5. **(Optional) Clean up the SQL file inside the container:**
     ```
-    rm /mcd_dump.sql
+    rm /mcd_data.sql
     exit
     ```
 ✅ Now you're ready to run the backend API.
