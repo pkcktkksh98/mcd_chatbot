@@ -119,10 +119,17 @@ mindhive_techassessment/
 2. **Run the script**
 
 ```bash
-python backend/rag/build_index.py
+python backend/utils/build_index.py
 ```
 
-3. **What it does**:
+3. **Move Vector Index into utils**
+
+```bash
+mv embeddings.npy utils/
+mv faiss.index utils/
+```
+
+4. **What it does**:
    - Fetches all outlet data from your database.
    - Concatenates fields into text chunks per outlet.
    - Encodes each chunk using SentenceTransformer embeddings.
