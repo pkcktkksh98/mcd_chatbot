@@ -103,13 +103,11 @@ def rag_query(query: Query, db: Session = Depends(get_db_session)):
     Name: {o.name}
     Address: {o.address}
     Telephone: {o.telephone or 'N/A'}
-    Email: {o.email or 'N/A'}
     Latitude: {o.lat}
     Longitude: {o.lng}
     State: {o.state}
     Features: {o.features or 'N/A'}
     Waze: {o.waze_link or 'N/A'}
-    Google Maps: {o.google_maps or 'N/A'}
     """
         for i, o in enumerate(outlets)
     )
